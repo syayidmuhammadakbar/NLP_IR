@@ -1,8 +1,14 @@
 import streamlit as st
 from txtai.pipeline import Summary
 from PyPDF2 import PdfFileReader
+from rouge_score import rouge_scorer
 
 st.set_page_config(layout='wide')
+
+def calculate_rouge(generated_summary, reference_summary):
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+    scores = scorer.score(generated_summary, reference_summary)
+    return scores
 
 @st.cache_resource
 def summary_text(text):
@@ -35,21 +41,15 @@ if choice == 'Summarize Text':
             with col2:
                 result = summary_text(input_text)
                 st.markdown("***Summary***")
-                st.success(result)
+                st.success(result)\
+                
+                # Add reference summary for ROUGE evaluation
+                reference_summary = (input_text)
 
-elif choice == 'Summarize Document':
-    st.subheader('Summarize Document using textai')
-    input_file = st.file_uploader('Input your file', type= ['pdf'])
-    if input_file is not None:
-        if st.button("Summarize Document"):
-            with open(' PEMANFATAN TEOREMA BAYES DALAM PENENTUAN PENYAKIT THT.pdf', 'wb') as f:
-                f.write(input_file.getbuffer())
-            col1, col2 = st.columns([1,1])
-            with col1:
-                st.markdown("***Extracted file***")
-                extracted_text = extract_text_from_pdf('PEMANFATAN TEOREMA BAYES DALAM PENENTUAN PENYAKIT THT.pdf')
-            with col2:
-                result = extract_text_from_pdf(input_file)
-                st.markdown("***Summarize Document***")
-                summary_result = summary_text(result)
-                st.success(summary_result)
+                # Calculate ROUGE scores
+                rouge_scores = calculate_rouge(result, reference_summary)
+                st.subheader("ROUGE Scores:")
+                st.text(f"ROUGE-1 Precision: {rouge_scores['rouge1'].precision}")
+                st.text(f"ROUGE-1 Recall: {rouge_scores['rouge1'].recall}")
+                st.text(f"ROUGE-1 F1 Score: {rouge_scores['rouge1'].fmeasure}")
+                # Similar blocks for ROUGE-2 and ROUGE-L
