@@ -1,7 +1,7 @@
 import streamlit as st
 from txtai.pipeline import Summary
 from PyPDF2 import PdfFileReader
-from rouge_score import rouge_scorer
+
 
 
 st.set_page_config(layout='wide')
@@ -46,11 +46,3 @@ if choice == 'Summarize Text':
                 
                 # Add reference summary for ROUGE evaluation
                 reference_summary = (input_text)
-
-                # Calculate ROUGE scores
-                rouge_scores = calculate_rouge(result, reference_summary)
-                st.subheader("ROUGE Scores:")
-                st.text(f"ROUGE-1 Precision: {rouge_scores['rouge1'].precision}")
-                st.text(f"ROUGE-1 Recall: {rouge_scores['rouge1'].recall}")
-                st.text(f"ROUGE-1 F1 Score: {rouge_scores['rouge1'].fmeasure}")
-                # Similar blocks for ROUGE-2 and ROUGE-L
