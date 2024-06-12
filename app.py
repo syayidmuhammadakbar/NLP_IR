@@ -6,11 +6,6 @@ from PyPDF2 import PdfFileReader
 
 st.set_page_config(layout='wide')
 
-def calculate_rouge(generated_summary, reference_summary):
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
-    scores = scorer.score(generated_summary, reference_summary)
-    return scores
-
 @st.cache_resource
 def summary_text(text):
     summary = Summary()
