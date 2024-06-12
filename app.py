@@ -3,6 +3,7 @@ from txtai.pipeline import Summary
 from PyPDF2 import PdfFileReader
 from rouge_score import rouge_scorer
 
+
 st.set_page_config(layout='wide')
 
 def calculate_rouge(generated_summary, reference_summary):
