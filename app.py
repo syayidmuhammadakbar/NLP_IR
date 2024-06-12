@@ -30,8 +30,8 @@ choice = st.sidebar.selectbox('select your choice', ['Summarize Text', 'Summariz
 
 if choice == 'Summarize Text':
     st.title('_SummarizeME_ is :blue[cool] :sunglasses:')
-    st.text('Ini adalah website _text summary_  yang dapat memudahkan dalam merangkum sebuah paragraph.')
-    st.text('website ini disusun oleh: Syayid Muhammad Akbar dan Ayu Hapsary')
+    st.text('Ini adalah website _text summary_  yang dapat memudahkan dalam merangkum sebuah kalimat.')
+    st.text('Project ini disusun oleh: Muhammad Reski Djunaedi, Muhammad Rofiul Arham, Syayid Muhammad Akbar, Sintia Sari, Reva Aulia Faradilah')
     input_text = st.text_area('Enter your text here !')
     if input_text is not None:
         if st.button('Summarize Text'):
